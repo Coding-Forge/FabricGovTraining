@@ -4,6 +4,14 @@ Microsoft Fabric training for SQL, Power Query, and Power BI practitioners, with
 
 **Session 03 is the developed training package:** six lessons, six labs, a PowerPoint presentation, printable handbooks, and a presenter delivery guide. Sessions 01 and 02 are not yet developed.
 
+## Customer downloads
+
+Download the [v1.0.0 release](https://github.com/Coding-Forge/FabricGovTraining/releases/tag/v1.0.0), or get the [complete customer package ZIP](https://github.com/Coding-Forge/FabricGovTraining/releases/download/v1.0.0/FabricGovTraining-v1.0.0.zip).
+
+Extract the ZIP before opening the materials so relative links and lab paths work. It includes this README, the Session 03 blueprint, lessons, labs, presentation, PDFs, synthetic data, scripts, and build tools. Internal program planning and the superseded facilitator draft are excluded.
+
+The release also provides the PowerPoint and three PDFs as individual downloads, plus `SHA256SUMS.txt` for integrity checks. GitHub's automatic **Source code** archives contain the full repository, not the curated customer package.
+
 ## Start here
 
 | Your role | Start with |
