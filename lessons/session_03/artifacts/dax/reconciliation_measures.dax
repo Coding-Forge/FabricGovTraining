@@ -1,0 +1,26 @@
+// Create each measure separately on the Reconciliation model table.
+// These are measure definitions, not a DAX query or a bulk-import script.
+
+Compared Records =
+COUNTROWS('Reconciliation')
+
+Matched Records =
+COALESCE(
+    CALCULATE(
+        [Compared Records],
+        KEEPFILTERS('Reconciliation'[classification] = "MATCH")
+    ),
+    0
+)
+
+Exception Records =
+COALESCE(
+    CALCULATE(
+        [Compared Records],
+        KEEPFILTERS('Reconciliation'[classification] <> "MATCH")
+    ),
+    0
+)
+
+Match Rate =
+DIVIDE([Matched Records], [Compared Records])
