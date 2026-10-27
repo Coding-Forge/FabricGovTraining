@@ -1,7 +1,7 @@
 # Lesson 5: Operations and GCC High findings
 
 **Session 3 | October 28, 2026 | 25 minutes**  
-**Blueprint:** [Module 5](../session_3_blueprint.md#module-5-operations-and-gcc-high-findings---25-minutes)  
+**Blueprint:** [Module 5](../../session_3_blueprint.md#module-5-operations-and-gcc-high-findings---25-minutes)  
 **Lesson output:** An initial operations checklist and findings register.
 
 ## What this lesson teaches

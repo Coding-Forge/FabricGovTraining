@@ -1,7 +1,7 @@
 # Lesson 2: Repeatable ingestion
 
 **Session 3 | October 28, 2026 | 35 minutes**  
-**Blueprint:** [Module 2](../session_3_blueprint.md#module-2-repeatable-ingestion---35-minutes)  
+**Blueprint:** [Module 2](../../session_3_blueprint.md#module-2-repeatable-ingestion---35-minutes)  
 **Lesson output:** A repeatable ingestion pattern with its scheduling method documented.
 
 ## What this lesson teaches

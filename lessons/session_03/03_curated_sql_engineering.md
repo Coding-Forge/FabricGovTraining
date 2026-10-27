@@ -1,7 +1,7 @@
 # Lesson 3: Curated SQL engineering
 
 **Session 3 | October 28, 2026 | 50 minutes**  
-**Blueprint:** [Module 3](../session_3_blueprint.md#module-3-curated-sql-engineering---50-minutes)  
+**Blueprint:** [Module 3](../../session_3_blueprint.md#module-3-curated-sql-engineering---50-minutes)  
 **Lesson output:** Curated Warehouse objects and explainable reconciliation results.
 
 ## What this lesson teaches

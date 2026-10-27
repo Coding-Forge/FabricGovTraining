@@ -1,7 +1,7 @@
 # Lesson 6: Exit review
 
 **Session 3 | October 28, 2026 | 10 minutes**  
-**Blueprint:** [Module 6](../session_3_blueprint.md#module-6-exit-review---10-minutes)  
+**Blueprint:** [Module 6](../../session_3_blueprint.md#module-6-exit-review---10-minutes)  
 **Lesson output:** An evidence-based completion record, owned follow-ups, and participant track alignment.
 
 ## What this lesson teaches
@@ -105,4 +105,4 @@ Close with the outcome:
 > We have a reasoned architecture, a defined ingestion contract, explicit reconciliation rules, a consumption decision, and an initial operating model. Where we demonstrated rather than independently completed a path, that distinction is recorded. Where a dependency remains unresolved, it has an owner and an evidence-based next action.
 
 **Previous:** [Lesson 5](05_operations_and_gcc_high_findings.md)  
-**Session outline:** [Session 3 blueprint](../session_3_blueprint.md)
+**Session outline:** [Session 3 blueprint](../../session_3_blueprint.md)

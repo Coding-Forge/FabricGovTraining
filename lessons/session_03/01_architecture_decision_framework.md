@@ -1,7 +1,7 @@
 # Lesson 1: Architecture decision framework
 
 **Session 3 | October 28, 2026 | 25 minutes**  
-**Blueprint:** [Module 1](../session_3_blueprint.md#module-1-architecture-decision-framework---25-minutes)  
+**Blueprint:** [Module 1](../../session_3_blueprint.md#module-1-architecture-decision-framework---25-minutes)  
 **Lesson output:** A completed architecture decision record.
 
 ## What this lesson teaches

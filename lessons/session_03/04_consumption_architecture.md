@@ -1,7 +1,7 @@
 # Lesson 4: Consumption architecture
 
 **Session 3 | October 28, 2026 | 35 minutes**  
-**Blueprint:** [Module 4](../session_3_blueprint.md#module-4-consumption-architecture---35-minutes)  
+**Blueprint:** [Module 4](../../session_3_blueprint.md#module-4-consumption-architecture---35-minutes)  
 **Lesson output:** A selected consumption path with a documented rationale.
 
 ## What this lesson teaches
