@@ -16,6 +16,7 @@ from pptx.util import Inches, Pt
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "presentation" / "session_03_low_code_fabric_data_engineering.pptx"
 SOURCES = sorted(ROOT.glob("0[1-6]_*.md"))
+SPEAKER_NOTES = ROOT / "artifacts" / "speaker_notes.md"
 FONT_DIR = Path("/usr/share/fonts/truetype/dejavu")
 FONT = "DejaVu Sans"
 MONO = "DejaVu Sans Mono"
@@ -223,6 +224,34 @@ def section(number, title, minutes, output):
     text(slide, "WHAT YOU WILL PRODUCE", 4.25, 2.75, 8, 0.4, 13, MINT, True)
     text(slide, output, 4.25, 3.45, 8, 1.85, 31, WHITE, True)
     notes(slide, "Complete source lesson for presenter reference:\n\n" + lesson.read_text())
+
+
+def add_presenter_notes():
+    entries = re.findall(
+        r"^## (\d{2}) \| ([^\n]+)\n(.*?)(?=^## \d{2} \| |\Z)",
+        SPEAKER_NOTES.read_text(),
+        re.MULTILINE | re.DOTALL,
+    )
+    if len(entries) != len(prs.slides):
+        raise ValueError("Expected one presenter-notes entry per slide")
+    for index, (slide, (number, title, script)) in enumerate(
+        zip(prs.slides, entries), 1
+    ):
+        visible_text = {
+            " ".join(shape.text.split())
+            for shape in slide.shapes if shape.has_text_frame
+        }
+        if int(number) != index or " ".join(title.split()) not in visible_text:
+            raise ValueError(f"Presenter notes do not match slide {index}: {title}")
+        if not script.strip():
+            raise ValueError(f"Presenter notes are empty for slide {index}")
+        frame = slide.notes_slide.notes_text_frame
+        reference = frame.text
+        frame.text = (
+            f"PRESENTER GUIDE | SLIDE {number}\n{title}\n\n{script.strip()}"
+            "\n\nADDITIONAL REFERENCE (not a read-aloud script)\n\n"
+            + reference
+        )
 
 
 def build():
@@ -679,6 +708,7 @@ if __name__ == "__main__":
     if len(SOURCES) != 6:
         raise SystemExit(f"Expected six source lessons, found {len(SOURCES)}")
     build()
+    add_presenter_notes()
     OUTPUT.parent.mkdir(exist_ok=True)
     prs.save(OUTPUT)
     print(f"Created {OUTPUT}")
