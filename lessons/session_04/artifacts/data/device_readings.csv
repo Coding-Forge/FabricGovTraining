@@ -1,0 +1,10 @@
+device_id,event_id,event_time_utc,temperature_c,firmware_version,signal_strength_dbm,ui_theme,debug_message,export_row_number
+ d01 ,E001,2026-10-28T10:00:00Z,20.00,2.1,-65,dark,render_ok,1
+D01,E002,2026-10-28T10:05:00Z,22.00,2.1,-66,dark,render_ok,2
+D01,E002,2026-10-28T10:05:00Z,22.00,2.1,-66,dark,render_ok,3
+D01,E003,2026-10-28T10:10:00Z,24.00,2.1,-68,dark,render_ok,4
+D02,E004,2026-10-28T10:00:00Z,30.00,2.2,-72,dark,render_ok,5
+D02,E005,2026-10-28T10:05:00Z,sensor error,2.2,-74,dark,render_ok,6
+D02,E006,not a timestamp,25.00,2.2,-73,dark,render_ok,7
+D02,E007,2026-10-28T10:15:00Z,200.00,2.2,-75,dark,render_ok,8
+D02,E008,2026-10-28T10:20:00Z,32.00,2.2,-70,dark,render_ok,9

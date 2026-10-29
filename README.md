@@ -4,6 +4,34 @@ Microsoft Fabric training for SQL, Power Query, and Power BI practitioners, with
 
 **Session 03 is the developed training package:** six lessons, six labs, a PowerPoint presentation, printable handbooks, and a presenter delivery guide. Sessions 01 and 02 are not yet developed.
 
+**Session 04 is in development:** [Notebooks with Warehouse Gold](session_4_blueprint.md) covers notebook use cases, data exploration/visualization, Data Wrangler, Silver column design, and worked Lakehouse-to-Warehouse examples. It is not included in the v1.0.0 customer release.
+
+First-time users start with **[Notebook 101](lessons/session_04/00_notebook_101.md)**
+and a read-only three-error repair exercise, then move to the
+**[main notebook lab](lessons/session_04/09_realistic_data_lab.md)** with 201,579
+telemetry rows and 5,000 nested orders across fourteen days. Importable
+**[starter/solution notebooks](lessons/session_04/notebooks/README.md)** include
+the code and focused learner checkpoints. The
+[dataset guide](lessons/session_04/artifacts/data/README.md) explains the realistic
+inputs, answer keys, deterministic generator, and separate small teaching fixtures.
+
+Keep the [notebook survival guide](lessons/session_04/notebook_survival_guide.md)
+beside the lab, then attempt the
+[independent challenge](lessons/session_04/10_independent_challenge.md).
+Follow-on lessons cover
+[Git and notebook review](lessons/session_04/11_git_and_fabric_notebooks.md) and
+[local VS Code authoring on remote Fabric compute](lessons/session_04/12_vscode_connected_authoring.md).
+Start tenant rehearsal with the
+[first real-workspace test sequence](lessons/session_04/notebooks/README.md#first-real-workspace-test);
+Git/extension support must be verified in the actual customer cloud.
+
+**Before delivery:** Complete the [mandatory Session 04 setup](lessons/session_04/prerequisites.md)
+for ADLS Gen2, file landing, permissions, and rehearsal. The presenter must
+check in with the customer **3-5 business days before delivery** to verify
+completion, then reconfirm on the preceding business day.
+
+Use the [PySpark field guide](lessons/session_04/08_pyspark_function_reference.md) to find common functions and methods by engineering task, with where/why/when guidance and practical recipes.
+
 ## Customer downloads
 
 Download the [v1.0.0 release](https://github.com/Coding-Forge/FabricGovTraining/releases/tag/v1.0.0), or get the [complete customer package ZIP](https://github.com/Coding-Forge/FabricGovTraining/releases/download/v1.0.0/FabricGovTraining-v1.0.0.zip).
@@ -67,6 +95,7 @@ The baseline produces six reconciled keys: one match and five exceptions. The co
 ```text
 lesson_plan.md                    Original program context and planning
 session_3_blueprint.md             Session 03 outcomes and module outline
+session_4_blueprint.md             Session 04 notebook outcomes and proposed sequence
 session_3_facilitator_guide.md     Earlier planning draft; use delivery_guide.md instead
 lessons/
   build_pdfs.py                   Teaching handbook generator
@@ -82,6 +111,16 @@ lessons/
       validate_lab_assets.py      Offline lab checks
     presentation/                 Generated PowerPoint
     pdf/                          Generated handbook, workbook, and delivery guide
+  session_04/
+    00_...md through 12_...md      Foundations, main lab, challenge, Git, and VS Code
+    notebook_survival_guide.md     Compact path, troubleshooting, and safety reference
+    prerequisites.md              Mandatory customer setup and presenter readiness gate
+    notebooks/                    Eight importable starter/solution notebooks and run guide
+    artifacts/data/               Micro fixtures and materialized scenario datasets
+    artifacts/generate_datasets.py Deterministic main-lab generator (standard library)
+    artifacts/build_notebooks.py   Build portable output-free learning notebooks
+    artifacts/sql/                Scenario-specific Warehouse setup/publication
+    artifacts/validate_examples.py Offline data, reproducibility, contract/link checks
 ```
 
 ## Rebuild and maintain
@@ -95,6 +134,7 @@ Run from the repository root:
 ```bash
 # Check fixtures, source alignment, and lab packaging; no Fabric connection required.
 python lessons/session_03/artifacts/validate_lab_assets.py
+python lessons/session_04/artifacts/validate_examples.py
 
 # Regenerate the presentation and PDFs.
 python lessons/session_03/artifacts/build_presentation.py
@@ -102,5 +142,15 @@ python lessons/build_pdfs.py
 python lessons/session_03/artifacts/build_lab_workbook.py
 python lessons/session_03/artifacts/build_delivery_guide.py
 ```
+
+Rebuild Session 04's eight importable learning notebooks with
+`python lessons/session_04/artifacts/build_notebooks.py`, then run its validator.
+Both steps use Python's standard library. Rebuilding does not execute Spark,
+bind customer Lakehouses, or publish Warehouse data.
+
+Session 04's main datasets are already included. To recreate them without any
+external dependencies, run `python lessons/session_04/artifacts/generate_datasets.py`,
+then rerun its validator. Regeneration is a maintainer step, not a participant
+prerequisite; never overwrite inputs during an active notebook/copy run.
 
 Edit Markdown lesson/lab sources and the presentation generator rather than only modifying generated files. After rebuilding, check slide and PDF page references in the delivery guide, along with layout and pagination, before sharing the package.

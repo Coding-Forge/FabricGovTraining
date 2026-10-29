@@ -1,0 +1,4 @@
+{"order_id":" o1001 ","customer":{"id":" c001 ","name":"Contoso North"},"lines":[{"line_number":"1","sku":" pump-01 ","quantity":"2","unit_price":"125.50"},{"line_number":"2","sku":"filter-01","quantity":"1","unit_price":"30.00"}]}
+{"order_id":"O1002","customer":{"id":"C002","name":"Contoso South"},"lines":[{"line_number":"1","sku":"valve-01","quantity":"not provided","unit_price":"25.00"},{"line_number":"2","sku":"seal-01","quantity":"3","unit_price":"5.00"}]}
+{"order_id":"O1003","customer":{"id":"C003","name":"Contoso West"},"lines":[{"line_number":"1","sku":"gauge-01","quantity":"1","unit_price":"10.00"},{"line_number":"1","sku":"gauge-01","quantity":"1","unit_price":"10.00"}]}
+{"order_id":"O1004","customer":{"id":"C004","name":"Contoso East"},"lines":[]}
