@@ -25,6 +25,10 @@ Start tenant rehearsal with the
 [first real-workspace test sequence](lessons/session_04/notebooks/README.md#first-real-workspace-test);
 Git/extension support must be verified in the actual customer cloud.
 
+Printable versions of every Session 04 Markdown guide are in
+[`lessons/session_04/pdf/`](lessons/session_04/pdf/), with source filenames and
+subfolders preserved.
+
 **Before delivery:** Complete the [mandatory Session 04 setup](lessons/session_04/prerequisites.md)
 for ADLS Gen2, file landing, permissions, and rehearsal. The presenter must
 check in with the customer **3-5 business days before delivery** to verify
@@ -116,6 +120,7 @@ lessons/
     notebook_survival_guide.md     Compact path, troubleshooting, and safety reference
     prerequisites.md              Mandatory customer setup and presenter readiness gate
     notebooks/                    Eight importable starter/solution notebooks and run guide
+    pdf/                          Individual PDFs of all Session 04 Markdown guides
     artifacts/data/               Micro fixtures and materialized scenario datasets
     artifacts/generate_datasets.py Deterministic main-lab generator (standard library)
     artifacts/build_notebooks.py   Build portable output-free learning notebooks
@@ -147,6 +152,12 @@ Rebuild Session 04's eight importable learning notebooks with
 `python lessons/session_04/artifacts/build_notebooks.py`, then run its validator.
 Both steps use Python's standard library. Rebuilding does not execute Spark,
 bind customer Lakehouses, or publish Warehouse data.
+
+Rebuild only the Session 04 document PDFs with
+`python lessons/build_pdfs.py --session session_04 --individual`.
+This includes prerequisites, the survival guide, and nested README files without
+rebuilding the Session 03 handbook. PDF companion-material links open the
+repository originals; keep the notebook/data assets for hands-on work.
 
 Session 04's main datasets are already included. To recreate them without any
 external dependencies, run `python lessons/session_04/artifacts/generate_datasets.py`,

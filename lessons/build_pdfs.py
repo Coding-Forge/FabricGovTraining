@@ -1,13 +1,16 @@
 """Create a styled PDF handbook for each session containing Markdown lessons.
 
 Run from any directory: python lessons/build_pdfs.py
+Individual documents: python lessons/build_pdfs.py --session session_04 --individual
 Requires WeasyPrint, markdown-it-py, and Pygments.
 """
 
+import argparse
 from html import escape
 import logging
 from pathlib import Path
 import re
+from urllib.parse import quote, unquote, urlsplit
 
 from markdown_it import MarkdownIt
 from pygments import highlight
@@ -382,8 +385,85 @@ def build_session(session_dir):
     print(f"Created {output} ({output.stat().st_size:,} bytes)")
 
 
+def build_individual_documents(session_dir):
+    output_dir = session_dir / "pdf"
+    sources = sorted(
+        path for path in session_dir.rglob("*.md") if output_dir not in path.parents
+    )
+    repository_url = "https://github.com/Coding-Forge/FabricGovTraining"
+    number = session_dir.name.rsplit("_", 1)[1]
+    document_css = CSS + f"""
+@page {{
+  @top-left {{ content: "FABRIC / SESSION {number}"; }}
+  @top-right {{ content: "NOTEBOOKS / PRACTICAL GUIDE"; }}
+  @bottom-left {{ content: "FABRIC NOTEBOOK TRAINING"; }}
+}}
+h1 {{ font-size: 24pt; bookmark-level: 1; }}
+table {{ table-layout: fixed; break-inside: auto; }}
+th {{ overflow-wrap: anywhere; }}
+.source-note {{ font-size: 8pt; color: #526b75; margin-top: 20pt; }}
+"""
+    outputs = []
+    for source in sources:
+        text = source.read_text(encoding="utf-8")
+        title = next(line.lstrip("# ").strip() for line in text.splitlines() if line.startswith("# "))
+        md = make_markdown({})
+
+        def link_open(tokens, index, options, env):
+            token = tokens[index]
+            href = token.attrGet("href") or ""
+            parsed = urlsplit(href)
+            if href and not parsed.scheme and not parsed.netloc and not href.startswith("#"):
+                target = (source.parent / unquote(parsed.path)).resolve()
+                relative = target.relative_to(ROOT.parent)
+                kind = "tree" if target.is_dir() else "blob"
+                url = f"{repository_url}/{kind}/main/{quote(relative.as_posix())}"
+                if parsed.fragment:
+                    url += "#" + parsed.fragment
+                token.attrSet("href", url)
+            return md.renderer.renderToken(tokens, index, options, env)
+
+        def heading_ids(state):
+            seen = {}
+            for index, token in enumerate(state.tokens):
+                if token.type == "heading_open":
+                    label = state.tokens[index + 1].content
+                    slug = re.sub(r"[^\w\- ]", "", label.lower()).replace(" ", "-")
+                    occurrence = seen.get(slug, 0)
+                    seen[slug] = occurrence + 1
+                    token.attrSet("id", slug if not occurrence else f"{slug}-{occurrence}")
+
+        md.renderer.rules["link_open"] = link_open
+        md.core.ruler.after("inline", "heading_ids", heading_ids)
+        relative = source.relative_to(session_dir)
+        source_url = f"{repository_url}/blob/main/{quote(source.relative_to(ROOT.parent).as_posix())}"
+        document = f"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>{escape(title)}</title>
+<style>{document_css}</style></head><body>
+<div class="lesson-label">SESSION {escape(number)} / PRINTABLE GUIDE</div>
+{md.render(text)}
+<p class="source-note">Source: <a href="{escape(source_url)}">{escape(relative.as_posix())}</a>.
+Companion-material links open the repository originals.</p>
+</body></html>"""
+        output = output_dir / relative.with_suffix(".pdf")
+        output.parent.mkdir(parents=True, exist_ok=True)
+        HTML(string=document, base_url=str(source.parent)).write_pdf(output, pdf_tags=True)
+        outputs.append(output)
+        print(f"Created {output} ({output.stat().st_size:,} bytes)")
+    return outputs
+
+
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--session", choices=sorted(path.name for path in ROOT.glob("session_[0-9][0-9]") if path.is_dir()))
+    parser.add_argument("--individual", action="store_true", help="Render each Markdown file separately, preserving subfolders.")
+    args = parser.parse_args()
     logging.basicConfig(level=logging.WARNING)
-    for directory in sorted(ROOT.glob("session_[0-9][0-9]")):
+    directories = [ROOT / args.session] if args.session else sorted(ROOT.glob("session_[0-9][0-9]"))
+    for directory in directories:
         if directory.is_dir():
-            build_session(directory)
+            if args.individual:
+                build_individual_documents(directory)
+            else:
+                build_session(directory)
